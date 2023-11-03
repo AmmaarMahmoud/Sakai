@@ -1,0 +1,43 @@
+<div class="grid mt-0">
+
+	<div class="card w-full">
+		<p-table [value]="products" [paginator]="true" [rows]="10" [tableStyle]="{ 'min-width': '50rem' }">
+			<ng-template pTemplate="header">
+				<tr>
+					<th>Name Client</th>
+					<th>Client ID</th>
+					<th>Client</th>
+					<th>Date</th>
+					<th>Invoce number</th>
+					<th>Paid</th>
+					<th>Totle Amount</th>
+					<th>Discount</th>
+					<th>Value Added Tax</th>
+					<th>Totle Amount with tax</th>
+					<th>Product Order</th>
+					<th>Action</th>
+
+				</tr>
+			</ng-template>
+			<ng-template pTemplate="body" let-product>
+				<tr>
+					<td>{{ product.Name_Client }}</td>
+					<td>{{ product.Client_ID }}</td>
+					<td>{{ product.Client }}</td>
+					<td>{{ product.Date }}</td>
+					<td>{{ product.Invoce_number }}</td>
+					<td>{{ product.Paid }}</td>
+					<td>{{ product.Totle_Amount }}</td>
+					<td>{{ product.Discount }}</td>
+					<td>{{ product.Value_Added_Tax }}</td>
+					<td>{{ product.Totle_Amount_with_tax }}</td>
+					<td>{{ product.Product_Order }}</td>
+					<td class="d-flex align-items-center justify-content-between">
+						<!-- <i class="p-menuitem-icon pi pi-trash text-red-500 mx-2" style="font-size: 1rem"></i> -->
+						<i class="p-menuitem-icon pi pi-eye text-purple-500" style="font-size: 1rem" (click)="salesDetails(product.Client_ID)"></i>
+					</td>
+				</tr>
+			</ng-template>
+		</p-table>
+	</div>
+</div>

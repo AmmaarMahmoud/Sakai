@@ -1,0 +1,30 @@
+<div class="grid mt-0">
+	<div class="card w-full">
+		<p-table [value]="purchases" [paginator]="true" [rows]="10" [tableStyle]="{ 'min-width': '50rem' }">
+			<ng-template pTemplate="header">
+				<tr>
+					<th>رقم الفاتوره</th>
+					<th>الموورد</th>
+					<th>الرقم الضريبى</th>
+					<th>التاريخ والوقت</th>
+					<th>اجراء</th>
+
+				</tr>
+			</ng-template>
+			<ng-template pTemplate="body" let-product>
+				<tr>
+					<td>{{ product.id }}</td>
+					<td>{{ product.client_ID }}</td>
+					<td>{{ product.valueAddedTax }}</td>
+					<td>{{ product.date | date:'dd-MM-yyyy / hh:mm:ss a':'+0530' }}</td>
+
+					<td class="d-flex align-items-center justify-content-between">
+						<i class="p-menuitem-icon pi pi-pencil text-teal-500" style="font-size: 1rem" (click)="Updatepurchase(product)" ></i>
+						<i class="p-menuitem-icon pi pi-trash text-red-500 mx-2" style="font-size: 1rem" (click)="deletepurchase(product.id)"></i>
+						<i class="p-menuitem-icon pi pi-eye text-purple-500" style="font-size: 1rem" (click)="purchasDetails(product.id)"></i>
+					</td>
+				</tr>
+			</ng-template>
+		</p-table>
+	</div>
+</div>

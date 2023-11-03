@@ -1,0 +1,76 @@
+
+<div class="card mt-0">
+    <p-fieldset legend="اضافة منتج" class="">
+        <form class="w-full grid" [formGroup]="MyForm" (ngSubmit)="onSubmit()">
+            <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
+                <label htmlFor="username">اسم المنتج</label>
+                <input pInputText id="username" aria-describedby="username-help" formControlName="Name"/>
+                <div *ngIf="Name?.invalid && Name?.touched" class="alert alert-danger">
+                    <small *ngIf="Name?.hasError('required')" class="text-danger"> اسم المنتج مطلوب</small>
+                </div>
+                <!-- <small *ngIf="Name.hasError('email')">Invalid email format</small> -->
+            </div>
+            <!-- <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
+                <label htmlFor="integeronly">Category</label>
+                <p-inputNumber inputId="integeronly" formControlName="Category"> </p-inputNumber>
+                <div *ngIf="Category?.invalid && Category?.touched ">
+                    <small *ngIf="Category?.hasError('required')" >Category is required</small>
+                </div>
+            </div> -->
+            <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
+                <label htmlFor="username">السعر</label>
+                <p-inputNumber inputId="integeronly" formControlName="Price"> </p-inputNumber>
+                <div *ngIf="Price?.invalid && Price?.touched ">
+                    <small *ngIf="Price?.hasError('required')" >السعر مطلوب</small>
+                </div>
+            </div>
+            <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
+                <label htmlFor="username">ضريبة</label>
+                <p-inputNumber inputId="integeronly" formControlName="Tax"> </p-inputNumber>
+                <div *ngIf="Tax?.invalid && Tax?.touched ">
+                    <small *ngIf="Tax?.hasError('required')" >الضريبة مطلوبة</small>
+                </div>
+            </div>
+            <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
+                <label htmlFor="username">نوع الضريبة</label>
+                <p-inputNumber inputId="integeronly" formControlName="Type_tax"> </p-inputNumber>
+                <div *ngIf="Type_tax?.invalid && Type_tax?.touched ">
+                    <small *ngIf="Type_tax?.hasError('required')" >ضريبة النوع مطلوبة</small>
+                </div>
+            </div>
+            <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
+                <label htmlFor="username">وحدة</label>
+                <p-inputNumber inputId="integeronly" formControlName="Unit"> </p-inputNumber>
+                <div *ngIf="Unit?.invalid && Unit?.touched">
+                    <small *ngIf="Unit?.hasError('required')" >الوحدة مطلوبة</small>
+                </div>
+            </div>
+            <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
+                <label htmlFor="username">العدد</label>
+                <p-inputNumber inputId="integeronly" formControlName="Count"> </p-inputNumber>
+                <div *ngIf="Count?.invalid && Count?.touched">
+                    <small *ngIf="Count?.hasError('required')" >العد مطلوب</small>
+                </div>
+            </div>
+            <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
+                <label htmlFor="username">رمز الفئة</label>
+                <p-inputNumber inputId="integeronly" formControlName="Category_ID"> </p-inputNumber>
+                <div *ngIf="Category_ID?.invalid && Category_ID?.touched">
+                    <small *ngIf="Category_ID?.hasError('required')" >رمز الفئة مطلوب</small>
+                </div>
+            </div>
+            <!-- <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
+                <label htmlFor="username">Puschase ID</label>
+                <p-inputNumber inputId="integeronly" formControlName="Puschase_ID"> </p-inputNumber>
+                <div *ngIf="Puschase_ID?.invalid && Puschase_ID?.touched">
+                    <small *ngIf="Puschase_ID?.hasError('required')" >Puschase ID is required</small>
+                </div>
+            </div> -->
+            <div class="flex flex-column gap-2 col-12">
+                <p-button label="اضافة" type="ngSubmit" [disabled]="MyForm.invalid"></p-button>
+            </div>
+
+            
+        </form>
+    </p-fieldset>
+</div>

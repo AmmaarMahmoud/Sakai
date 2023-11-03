@@ -1,0 +1,64 @@
+/* You can add global styles to this file, and also import other style files */
+
+$gutter: 1rem; //for primeflex grid system
+@import "assets/layout/styles/layout/layout.scss";
+
+/* PrimeNG */
+@import "../node_modules/primeng/resources/primeng.min.css";
+@import "../node_modules/primeflex/primeflex.scss";
+@import "../node_modules/primeicons/primeicons.css";
+
+/* Demos */
+@import "assets/demo/styles/flags/flags.css";
+@import "assets/demo/styles/badges.scss";
+@import "assets/demo/styles/code.scss";
+
+html,body{
+    direction: rtl !important;
+}
+.p-password{
+    width: 100% !important;
+}
+p-inputnumber, .p-inputnumber {
+    width: 100% !important;
+}
+.p-fieldset{
+    width: 100% !important;
+}
+.layout-topbar .layout-topbar-menu{
+    margin: 0 auto 0 0 !important;
+}
+.p-button-label{
+    margin-right: 7px !important;
+}
+.layout-menu ul a .layout-menuitem-icon {
+    margin-left: 0.5rem !important;
+} 
+.p-paginator  .p-disabled{
+    transform: rotate(180deg) !important;
+}
+
+tr td,tr th{
+    text-align: center !important;
+}
+.p-calendar{
+    width: 100% !important;
+}
+.p-calendar-w-btn .p-inputtext {
+    border-top-left-radius: 0!important;
+    border-bottom-left-radius: 0!important;
+    border-top-right-radius: 5px!important;
+    border-bottom-right-radius: 5px!important;
+}
+
+.p-calendar-w-btn .p-datepicker-trigger {
+    border-top-right-radius: 0!important;
+    border-bottom-right-radius: 0!important;
+    border-top-left-radius: 5px!important;
+    border-bottom-left-radius: 5px!important;
+}
+@media screen and (min-width: 768px){
+    .md\:w-20rem {
+        width: 100% !important;
+    }
+}
