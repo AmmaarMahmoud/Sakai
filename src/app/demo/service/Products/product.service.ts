@@ -8,6 +8,7 @@ import { Product } from '../../api/product';
   providedIn: 'root'
 })
 export class ProductService {
+  AllProduct:any
   OneUpdateProduct?:Product
   constructor( private http : HttpClient) { }
 

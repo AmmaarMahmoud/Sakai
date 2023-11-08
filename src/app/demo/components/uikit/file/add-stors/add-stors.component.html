@@ -1,4 +1,5 @@
 
+
 <div class="card mt-0">
     <p-fieldset legend="اضافة منتج" class="">
         <form class="w-full grid" [formGroup]="MyForm" (ngSubmit)="onSubmit()">
@@ -52,13 +53,28 @@
                     <small *ngIf="Count?.hasError('required')" >العد مطلوب</small>
                 </div>
             </div>
+
+
             <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
+                <label htmlFor="id">اختر نوع الفئه </label>
+                <select class="md:w-20rem w-full" containerStyleClass="w-full" aria-label="Default select example" formControlName="Category_ID">
+                    <option [selected]="true" [disabled]="true"> اختر نوع الفئه </option>
+                    <ng-container *ngFor="let option of AllCategory">
+                        <option [value]="option.id">{{option.name}}</option>
+                    </ng-container>
+                </select>
+                <div *ngIf="Category_ID?.invalid && Category_ID?.touched ">
+                    <small *ngIf="Category_ID?.hasError('required')" > اختر نوع الفئه</small>
+                </div>
+            </div>
+
+            <!-- <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
                 <label htmlFor="username">رمز الفئة</label>
                 <p-inputNumber inputId="integeronly" formControlName="Category_ID"> </p-inputNumber>
                 <div *ngIf="Category_ID?.invalid && Category_ID?.touched">
                     <small *ngIf="Category_ID?.hasError('required')" >رمز الفئة مطلوب</small>
                 </div>
-            </div>
+            </div> -->
             <!-- <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
                 <label htmlFor="username">Puschase ID</label>
                 <p-inputNumber inputId="integeronly" formControlName="Puschase_ID"> </p-inputNumber>

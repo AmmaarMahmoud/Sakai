@@ -3,54 +3,10 @@
     
     <p-fieldset legend="اضافة فاتورة مشتريات" class="">
         <form class="w-full grid" [formGroup]="MyForm" (ngSubmit)="onSubmit()">
-            
-            <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
-                <label htmlFor="paymentMethod"> طريقة الدفع او السداد</label>
-                <select class="md:w-20rem w-full" containerStyleClass="w-full"  aria-label="Default select example" formControlName="paymentMethod">
-                    <option [selected] [disabled]="true"> اختر طريقة الدفع </option>
-                    <option [value]='0'>كاش</option>
-                    <option [value]='1'>هجل</option>
-                </select>
-            </div>
-            <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
-                <label htmlFor="storeNumber">عدد المخزن</label>
-                <p-inputNumber inputId="storeNumber" formControlName="storeNumber"> </p-inputNumber>
-                <div *ngIf="storeNumber?.invalid && storeNumber?.touched ">
-                    <small *ngIf="storeNumber?.hasError('required')" >عدد المخزن مطلوب </small>
-                </div>
-            </div>
-            <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
-                <label htmlFor="totalAmount"> المبلغ الإجمالي</label>
-                <p-inputNumber inputId="totalAmount" formControlName="totalAmount"> </p-inputNumber>
-                <div *ngIf="totalAmount?.invalid && totalAmount?.touched ">
-                    <small *ngIf="totalAmount?.hasError('required')" > المبلغ الإجمالي مطلوب</small>
-                </div>
-            </div>
-            <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
-                <label htmlFor="discount"> تخفيض</label>
-                <p-inputNumber inputId="discount" formControlName="discount"> </p-inputNumber>
-                <div *ngIf="discount?.invalid && discount?.touched ">
-                    <small *ngIf="discount?.hasError('required')" >  التخفيض مطلوب  </small>
-                </div>
-            </div>
-            <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
-                <label htmlFor="valueAddedTax"> ضريبة القيمة المضافة</label>
-                <p-inputNumber inputId="valueAddedTax" formControlName="valueAddedTax"> </p-inputNumber>
-                <div *ngIf="valueAddedTax?.invalid && valueAddedTax?.touched ">
-                    <small *ngIf="valueAddedTax?.hasError('required')" >  ضريبة القيمة المضافة مطلوب  </small>
-                </div>
-            </div>
-            <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
-                <label htmlFor="totalAmountWithTax"> المبلغ الإجمالي مع الضريبة </label>
-                <p-inputNumber inputId="totalAmountWithTax" formControlName="totalAmountWithTax"> </p-inputNumber>
-                <div *ngIf="totalAmountWithTax?.invalid && totalAmountWithTax?.touched ">
-                    <small *ngIf="totalAmountWithTax?.hasError('required')" > المبلغ الإجمالي مع الضريبة مطلوب</small>
-                </div>
-            </div>
             <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
                 <label htmlFor="client_ID"> المووردين </label>
                 <select class="md:w-20rem w-full" containerStyleClass="w-full" aria-label="Default select example" formControlName="client_ID">
-                    <option [selected]> اختر اسم المورد </option>
+                    <option [selected]="true" [disabled]="true"> اختر اسم المورد </option>
                     <ng-container *ngFor="let option of AllClient">
                         <option [value]="option?.id">{{option.name}}</option>
                     </ng-container>
@@ -59,37 +15,82 @@
                     <small *ngIf="client_ID?.hasError('required')" >  الموورد  مطلوب</small>
                 </div>
             </div>
+            <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
+                <label htmlFor="valueAddedTax">رقم الضريبى</label>
+                <p-inputNumber inputId="valueAddedTax" formControlName="valueAddedTax"> </p-inputNumber>
+                <div *ngIf="valueAddedTax?.invalid && valueAddedTax?.touched ">
+                    <small *ngIf="valueAddedTax?.hasError('required')" >رقم الضريبى مطلوب </small>
+                </div>
+            </div>
+            <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
+                <label htmlFor="paymentMethod"> الضريبه </label>
+                <select class="md:w-20rem w-full" containerStyleClass="w-full"  aria-label="Default select example" formControlName="paymentMethod">
+                    <option [selected] [disabled]="true"> الضريبه </option>
+                    <option [value]='0'>صفريه</option>
+                    <option [value]='1'>15%</option>
+                </select>
+            </div>
+
+            <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
+                <label htmlFor="totalAmount"> المبلغ الإجمالي</label>
+                <p-inputNumber inputId="totalAmount" formControlName="totalAmount"> </p-inputNumber>
+                <div *ngIf="totalAmount?.invalid && totalAmount?.touched ">
+                    <small *ngIf="totalAmount?.hasError('required')" > المبلغ الإجمالي مطلوب</small>
+                </div>
+            </div>
+            <!-- <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
+                <label htmlFor="discount"> الخصم</label>
+                <p-inputNumber inputId="discount" formControlName="discount"> </p-inputNumber>
+                <div *ngIf="discount?.invalid && discount?.touched ">
+                    <small *ngIf="discount?.hasError('required')" >  الخصم مطلوب  </small>
+                </div>
+            </div> -->
+            <!-- <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
+                <label htmlFor="valueAddedTax"> ضريبة القيمة المضافة</label>
+                <p-inputNumber inputId="valueAddedTax" formControlName="valueAddedTax"> </p-inputNumber>
+                <div *ngIf="valueAddedTax?.invalid && valueAddedTax?.touched ">
+                    <small *ngIf="valueAddedTax?.hasError('required')" >  ضريبة القيمة المضافة مطلوب  </small>
+                </div>
+            </div> -->
+            <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
+                <label htmlFor="totalAmountWithTax"> المبلغ الإجمالي مع الضريبة </label>
+                <p-inputNumber inputId="totalAmountWithTax" formControlName="totalAmountWithTax"> </p-inputNumber>
+                <div *ngIf="totalAmountWithTax?.invalid && totalAmountWithTax?.touched ">
+                    <small *ngIf="totalAmountWithTax?.hasError('required')" > المبلغ الإجمالي مع الضريبة مطلوب</small>
+                </div>
+            </div>
+          
             <p-fieldset legend="اضافة المنتجات" class="flex flex-column gap-2 col-12">
                 <div class="flex flex-column gap-2 col-12">
-                    <p-button label="اضافة منتجات" type="ngSubmit" [disabled]="product_Orders.invalid" (onClick)="AddProducts()"></p-button>
+                    <p-button label="اضافة منتجات" type="ngSubmit" [disabled]="product_Purchases.invalid" (onClick)="AddProducts()"></p-button>
                 </div>
-                <div  formArrayName="product_Orders">
-                    <ng-container *ngFor="let control of product_Orders?.controls ; let i = index">
+                <div  formArrayName="product_Purchases">
+                    <ng-container *ngFor="let control of product_Purchases?.controls ; let i = index">
                         <div [formGroupName]="i" class="grid">
                             <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
                                 <label htmlFor="id">اسم المنتج</label>
                                 <select class="md:w-20rem w-full" containerStyleClass="w-full" aria-label="Default select example" formControlName="id">
-                                    <option [selected] [disabled]="true"> اختر اسم المنتج </option>
+                                    <option [selected]="true" [disabled]="true"> اختر اسم المنتج </option>
                                     <ng-container *ngFor="let option of AllProduct">
-                                        <option [value]="option?.id">{{option.name}}</option>
+                                        <option [value]="option.id">{{option.name}}</option>
                                     </ng-container>
                                 </select>
                                 <div *ngIf="control.get('id')?.invalid && control.get('id')?.touched ">
-                                    <small *ngIf="control.get('id')?.hasError('required')" > رقم المنتج مطلوب</small>
+                                    <small *ngIf="control.get('id')?.hasError('required')" > اسم المنتج مطلوب</small>
                                 </div>
                             </div>
-                            <!-- <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
-                                <label htmlFor="order_ID">رقم المنتج</label>
-                                <p-inputNumber inputId="order_ID" formControlName="order_ID" [disabled]="true"> </p-inputNumber>
-                                <div *ngIf="control.get('order_ID')?.invalid && control.get('order_ID')?.touched ">
-                                    <small *ngIf="control.get('order_ID')?.hasError('required')" > رقم المنتج مطلوب</small>
-                                </div>
-                            </div> -->
                             <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
-                                <label htmlFor="count"> العدد</label>
+                                <label htmlFor="count"> الكميه</label>
                                 <p-inputNumber inputId="count" formControlName="count"> </p-inputNumber>
                                 <div *ngIf="control.get('count')?.invalid && control.get('count')?.touched ">
-                                    <small *ngIf="control.get('count')?.hasError('required')" > العدد مطلوب</small>
+                                    <small *ngIf="control.get('count')?.hasError('required')" > الكميه مطلوب</small>
+                                </div>
+                            </div>
+                            <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
+                                <label htmlFor="price"> سعر الوحده</label>
+                                <p-inputNumber inputId="price" formControlName="price" [disabled]="true"> </p-inputNumber>
+                                <div *ngIf="control.get('price')?.invalid && control.get('price')?.touched ">
+                                    <small *ngIf="control.get('price')?.hasError('required')" > سعر الوحده مطلوب</small>
                                 </div>
                             </div>
                         </div>

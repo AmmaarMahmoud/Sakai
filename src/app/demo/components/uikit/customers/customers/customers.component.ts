@@ -1,32 +1,58 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { map } from 'rxjs';
+import { Wanted } from 'src/app/demo/api/wanted';
+import { WantedService } from 'src/app/demo/service/Wanted/wanted.service';
 
 @Component({
   selector: 'app-customers',
   templateUrl: './customers.component.html',
   styleUrls: ['./customers.component.scss']
 })
-export class CustomersComponent implements OnInit {
-  products!: any[];
+export class CustomersComponent implements OnInit  {
+  AllWanted!: Wanted[];
 
 
-  constructor(private route : Router) {
-      this.products =[
-          {code:1,name:'Bamboo Watch',category:'Accessories',quantity:24,startdate:'1/1/2001',enddate:'1/1/2023',price:4000},
-          {code:2,name:'Bamboo Watch',category:'Accessories',quantity:24,startdate:'1/1/2001',enddate:'1/1/2023',price:4000},
-          {code:1,name:'Bamboo Watch',category:'Accessories',quantity:24,startdate:'1/1/2001',enddate:'1/1/2023',price:4000},
-          {code:4,name:'Bamboo Watch',category:'Accessories',quantity:24,startdate:'1/1/2001',enddate:'1/1/2023',price:4000},
-          {code:7,name:'Bamboo Watch',category:'Accessories',quantity:24,startdate:'1/1/2001',enddate:'1/1/2023',price:4000},
-          {code:10,name:'Bamboo Watch',category:'Accessories',quantity:24,startdate:'1/1/2001',enddate:'1/1/2023',price:4000},
-          {code:5,name:'Bamboo Watch',category:'Accessories',quantity:24,startdate:'1/1/2001',enddate:'1/1/2023',price:4000},
-          {code:2,name:'Bamboo Watch',category:'Accessories',quantity:24,startdate:'1/1/2001',enddate:'1/1/2023',price:4000},
-          {code:9,name:'Bamboo Watch',category:'Accessories',quantity:24,startdate:'1/1/2001',enddate:'1/1/2023',price:4000},
-      ]
-  }
+  constructor(
+      private route : Router,
+      private Wanted:WantedService
+  ) {}
+
+
+
   ngOnInit(): void {
+      this.GetAllWanted()
+  }
+  WantedDetails(id:number){
+      this.route.navigate(['uikit/customers/details',id])
+  }
+  AddWanted(){
+      this.route.navigateByUrl('uikit/customers/addCustomer')
+  }
+  GetAllWanted(){
+      this.Wanted.GetAllWanted().pipe(
+          map((data:any)=>{
+              return data.data
+          })
+      ).subscribe((data:any)=>{
+          this.AllWanted=data
+          console.log(this.AllWanted);
+      })
+  }
+  deleteWanted(id:number){
+      this.Wanted.DeleteWanted(id).subscribe((data:any)=>{
+          console.log(data);
+          this.GetAllWanted()
+      })
+  }
+  UpdateWanted(body:any){
+      this.Wanted.oneWanted=body
+      console.log(body);
       
+      this.route.navigate(['uikit/customers/addCustomer'])
   }
   CustomerDetails(id:number){
     this.route.navigate(['uikit/customers/details',id])
   }
+
 }

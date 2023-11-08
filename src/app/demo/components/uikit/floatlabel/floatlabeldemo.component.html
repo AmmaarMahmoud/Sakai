@@ -19,7 +19,7 @@
 					<td>{{ product.date | date:'dd-MM-yyyy / hh:mm:ss a':'+0530' }}</td>
 
 					<td class="d-flex align-items-center justify-content-between">
-						<i class="p-menuitem-icon pi pi-pencil text-teal-500" style="font-size: 1rem" (click)="Updatepurchase(product)" ></i>
+						<i class="p-menuitem-icon pi pi-pencil text-teal-500" style="font-size: 1rem" (click)="Updatepurchase(product.id)" ></i>
 						<i class="p-menuitem-icon pi pi-trash text-red-500 mx-2" style="font-size: 1rem" (click)="deletepurchase(product.id)"></i>
 						<i class="p-menuitem-icon pi pi-eye text-purple-500" style="font-size: 1rem" (click)="purchasDetails(product.id)"></i>
 					</td>

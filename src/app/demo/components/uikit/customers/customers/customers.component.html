@@ -1,31 +1,28 @@
 <div class="grid mt-0">
+	<div class="mb-4 mr-auto">
+		<p-button (click)="AddWanted()" label="اضافة عميل" class="mx-3" icon="pi pi-external-link" ></p-button>
+	</div>
 	<div class="card w-full">
-		<p-table [value]="products" [paginator]="true" [rows]="10" [tableStyle]="{ 'min-width': '50rem' }">
+		<p-table [value]="AllWanted" [paginator]="true" [rows]="10" [tableStyle]="{ 'min-width': '50rem' }">
 			<ng-template pTemplate="header">
 				<tr>
-					<th>Code</th>
-					<th>Name</th>
-					<th>Category</th>
-					<th>Quantity</th>
-					<th>Start Date</th>
-					<th>End Date</th>
-					<th>Price</th>
-					<th>Action</th>
+					<th>اسم الموررد</th>
+					<th>رقم التليفون</th>
+					<th>العنوان</th>
+					<th>الاجراءات</th>
+					
 
 				</tr>
 			</ng-template>
 			<ng-template pTemplate="body" let-product>
 				<tr>
-					<td>{{ product.code }}</td>
 					<td>{{ product.name }}</td>
-					<td>{{ product.category }}</td>
-					<td>{{ product.quantity }}</td>
-					<td>{{ product.startdate }}</td>
-					<td>{{ product.enddate }}</td>
-					<td>{{ product.price }}</td>
+					<td>{{ product.phone }}</td>
+					<td>{{ product.address }}</td>
 					<td class="d-flex align-items-center justify-content-between">
-						<i class="p-menuitem-icon pi pi-trash text-red-500 mx-2" style="font-size: 1rem"></i>
-						<i class="p-menuitem-icon pi pi-eye text-purple-500" style="font-size: 1rem" (click)="CustomerDetails(product.code)"></i>
+						<i class="p-menuitem-icon pi pi-pencil text-teal-500" style="font-size: 1rem" (click)="UpdateWanted(product)" ></i>
+						<i class="p-menuitem-icon pi pi-trash text-red-500 mx-2" style="font-size: 1rem" (click)="deleteWanted(product.id)" ></i>
+						<i class="p-menuitem-icon pi pi-eye text-purple-500" style="font-size: 1rem" (click)="WantedDetails(product.id)"></i>
 					</td>
 				</tr>
 			</ng-template>

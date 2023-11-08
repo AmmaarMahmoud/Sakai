@@ -23,13 +23,13 @@
                     <small *ngIf="address?.hasError('required')" class="text-danger">العنوان مطلوب</small>
                 </div>
             </div>
-            <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
+            <!-- <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
                 <label htmlFor="number">الرقم الضريبى</label>
                 <p-inputNumber inputId="number" formControlName="number"> </p-inputNumber>
                 <div *ngIf="number?.invalid && number?.touched ">
                     <small *ngIf="number?.hasError('required')" >  الرقم الضريبى مطلوب  </small>
                 </div>
-            </div>
+            </div> -->
             <div class="flex flex-column gap-2 col-12">
                 <p-button label="اضافة" type="ngSubmit" [disabled]="MyForm.invalid"></p-button>
             </div>

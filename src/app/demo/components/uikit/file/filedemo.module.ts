@@ -10,6 +10,9 @@ import { ButtonModule } from 'primeng/button';
 import { FieldsetModule } from 'primeng/fieldset';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { AddCategoryComponent } from './add-category/add-category.component';
+import { DialogModule } from 'primeng/dialog';
+
 @NgModule({
 	imports: [
 		CommonModule,
@@ -20,8 +23,9 @@ import { InputNumberModule } from 'primeng/inputnumber';
 		FieldsetModule,
 		ReactiveFormsModule,
 		InputTextModule,
-		InputNumberModule
+		InputNumberModule,
+		DialogModule
 	],
-	declarations: [FileDemoComponent, StorsDetailsComponent, AddStorsComponent],
+	declarations: [FileDemoComponent, StorsDetailsComponent, AddStorsComponent, AddCategoryComponent],
 })
 export class FileDemoModule { }

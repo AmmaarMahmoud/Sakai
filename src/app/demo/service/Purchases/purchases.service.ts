@@ -21,7 +21,8 @@ export class PurchasesService {
     return this.http.get<any>(`${environment.apiUrl}api/Purchase/GetAllPurchase`)
   }
   GetOnePurchase(id:any):Observable<any>{
-    return this.http.get<any>(`${environment.apiUrl}api/Purchase/GetPurchase/${id}`)
+    const params = new HttpParams().append('id',id)
+    return this.http.get<any>(`${environment.apiUrl}api/Purchase/GetPurchase`,{params})
   }
   DeletePurchase(id:number):Observable<any>{
     const params = new HttpParams().append('id',id)

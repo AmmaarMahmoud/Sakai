@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Category } from 'src/app/demo/api/category';
 import { Product } from 'src/app/demo/api/product';
+import { CategoryService } from 'src/app/demo/service/Categores/category.service';
 import { ProductService } from 'src/app/demo/service/Products/product.service';
 
 @Component({
@@ -9,9 +11,15 @@ import { ProductService } from 'src/app/demo/service/Products/product.service';
   templateUrl: './add-stors.component.html',
   styleUrls: ['./add-stors.component.scss']
 })
-export class AddStorsComponent {
+export class AddStorsComponent implements OnDestroy{
   MyForm!:FormGroup;
-  constructor(private builder :FormBuilder,private products:ProductService,private route:Router){
+  AllCategory?:Category[]
+  constructor(
+    private builder :FormBuilder,
+    private products:ProductService,
+    private route:Router, 
+    private category:CategoryService
+    ){
     this.MyForm=this.builder.group({
       Name:['',[Validators.required]],
       Price:['',[Validators.required]],
@@ -19,12 +27,13 @@ export class AddStorsComponent {
       Type_tax:['',[Validators.required]],
       Unit:['',[Validators.required]],
       Count:['',[Validators.required]],
-      Category_ID:['',[Validators.required]]
+      Category_ID:['اختر نوع الفئه',[Validators.required]]
     })
   }
 
   ngOnInit(): void {
     this.displayProductToUpdate()
+    this.AllCategores()
   }
 
 get Name(){
@@ -64,7 +73,7 @@ onSubmit(){
       this.Price?.value,
       this.Unit?.value,
       this.Count?.value,
-      this.Category_ID?.value
+      Number(this.Category_ID?.value)
       )
     this.addProduct(prod)
     console.log(prod);
@@ -76,7 +85,6 @@ onSubmit(){
   UpdateOneProduct(){
     this.products.UpdateProduct(this.MyForm.value).subscribe((data)=>{
       console.log(data);
-      this.products.OneUpdateProduct={}
       this.route.navigate(['uikit/stores'])
     })
   }
@@ -95,4 +103,10 @@ onSubmit(){
       })
     }
   }
+  AllCategores(){
+    this.AllCategory=this.category.AllCategores
+  }
+  ngOnDestroy(): void {
+    this.products.OneUpdateProduct=undefined
+}
 }

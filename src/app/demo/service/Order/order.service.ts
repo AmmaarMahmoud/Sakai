@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment.prod';
   providedIn: 'root'
 })
 export class OrderService {
+  OneOrder:any
 
   constructor( private http : HttpClient) { }
 
@@ -20,7 +21,8 @@ export class OrderService {
     return this.http.get<any>(`${environment.apiUrl}api/Order/GetAllOrder`)
   }
   GetOneSales(id:any):Observable<any>{
-    return this.http.get<any>(`${environment.apiUrl}api/Order/GetOrder/${id}`)
+    const params = new HttpParams().append('id',id)
+    return this.http.get<any>(`${environment.apiUrl}api/Order/GetOrder`,{params})
   }
   DeleteSales(id:number):Observable<any>{
     const params = new HttpParams().append('id',id)
