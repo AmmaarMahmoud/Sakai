@@ -15,7 +15,7 @@ export class ProductService {
   AddProduct(body:Product):Observable<any>{
     return this.http.post<any>(`${environment.apiUrl}api/Product/AddProduct`,body)
   }
-  UpdateProduct(body:number):Observable<any>{
+  UpdateProduct(body:Product):Observable<any>{
     return this.http.post<any>(`${environment.apiUrl}api/Product/UpdateProduct`,body)
   }
   GetAllProduct():Observable<any>{

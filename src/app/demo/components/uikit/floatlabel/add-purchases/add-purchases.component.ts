@@ -15,6 +15,10 @@ export class AddPurchasesComponent implements OnInit,OnDestroy {
   AllClient:any
   AllProduct:any
   MyForm!:FormGroup;
+  isDisabled:boolean=true
+  total:number=0
+  typetax?:number
+  option:any
   constructor(
     private builder :FormBuilder, 
     private Client:ClientService,
@@ -24,12 +28,12 @@ export class AddPurchasesComponent implements OnInit,OnDestroy {
     ){
     
     this.MyForm=this.builder.group({
-      paymentMethod:['الضريبه',[Validators.required]],
+      // paymentMethod:['الضريبه',[Validators.required]],
       valueAddedTax:['',[Validators.required]],
       // storeNumber:['',[Validators.required]],
-      totalAmount:['',[Validators.required]],
+      totalAmount:[{value:'', disabled: this.isDisabled},[Validators.required]],
       // discount:['',[Validators.required]],
-      totalAmountWithTax:['',[Validators.required]],
+      totalAmountWithTax:[{value:'', disabled: this.isDisabled},[Validators.required]],
       client_ID:['اختر اسم المورد',[Validators.required]],
       product_Purchases:this.builder.array([
 
@@ -43,11 +47,15 @@ export class AddPurchasesComponent implements OnInit,OnDestroy {
     this.AllClient=this.Client.AllClient
     this.AllProduct=this.product.AllProduct
     this.checkPurchase()
+    // const count:number =this.MyForm.get('product_Purchases')?.get('count')?.value
+    // const price:number =this.MyForm.get('product_Purchases')?.get('price')?.value
+    // this.total=count*price
+    // this.totalAmount?.value?.patchValue(this.total)
   }
 
-get paymentMethod(){
-  return this.MyForm.get('paymentMethod')
-}
+// get paymentMethod(){
+//   return this.MyForm.get('paymentMethod')
+// }
 // get storeNumber(){
 //   return this.MyForm.get('storeNumber')
 // }
@@ -83,7 +91,7 @@ onSubmit(){
 
     const purchase = new Purchase(
       OnePurchase.id,
-      Number(this.paymentMethod?.value),
+      // Number(this.paymentMethod?.value),
       this.valueAddedTax?.value,
       this.totalAmount?.value,
       this.totalAmountWithTax?.value,
@@ -96,20 +104,18 @@ onSubmit(){
     })
   }
   else{
-    const paymentMethod =  Number(this.paymentMethod?.value)
+    
     const client_ID =Number(this.client_ID?.value)
     const product_Purchases:product_Purchases[]=this.product_Purchases.value
     console.log(this.MyForm.value);
     
     const purchase = new Purchase(
-        0,
-        paymentMethod,
-        this.valueAddedTax?.value,
-        this.totalAmount?.value,
-        this.totalAmountWithTax?.value,
-        client_ID,
-        product_Purchases
-      )
+      0,
+      // Number(this.paymentMethod?.value),
+      this.valueAddedTax?.value,
+      this.totalAmount?.value,
+      this.totalAmountWithTax?.value,
+      client_ID,product_Purchases)
     this.purchase.AddPurchase(purchase).subscribe(
       (data:any)=>{
       console.log(data);
@@ -120,15 +126,13 @@ onSubmit(){
   }
   
 }
-isEmpty(){
-  this.MyForm.patchValue({})
-}
+
 AddProducts(){
   let Group =this.builder.group({
-    id:['اختر اسم المنتج',[Validators.required]],
-    order_ID:['0',[Validators.required]],
+    product_ID:['اختر اسم المنتج',[Validators.required]],
+    purchase_ID:['0',[Validators.required]],
     count:['',[Validators.required]],
-    price:['',[Validators.required]],
+    price:[{value:'', disabled: this.isDisabled},[Validators.required]],
   })
   this.product_Purchases.push(Group)
   console.log(this.product_Purchases);
@@ -144,7 +148,7 @@ AddProducts(){
       
       purchase.product_Purchases?.forEach((obj:any)=>{
         let group:FormGroup = this.builder.group({
-              id:[obj.id,[Validators.required]],
+              product_ID:[obj.id,[Validators.required]],
               purchase_ID:[obj.purchase_ID,[Validators.required]],
               count:[obj.count,[Validators.required]],
               price:[obj.price,[Validators.required]]
@@ -152,14 +156,44 @@ AddProducts(){
         this.product_Purchases.push(group)
       })
       this.MyForm.patchValue({
-        paymentMethod:purchase.paymentMethod,
-        valueAddedTax:purchase.valueAddedTax,
         totalAmount:purchase.totalAmount,
+        valueAddedTax:purchase.valueAddedTax,
         totalAmountWithTax:purchase.totalAmountWithTax,
         client_ID:purchase.client_ID,
       })
     }
   }
+  typeTax(event:any){
+    const id = Number(event.target.value)
+    console.log(id);
+    this.AllProduct.forEach((value:any)=>{
+      if(id===value.id){
+        this.typetax=value.type_tax
+        this.option=value
+        console.log(this.typetax);
+        console.log(value);
+        console.log(this.option.price);
+        const length=this.product_Purchases.length-1
+        this.product_Purchases.controls[length].get('price')?.patchValue(this.option.price);
+        
+      }
+    })
+  }
+  proccesstotalAmount(event:any){
+
+    localStorage.removeItem('count')
+    const count=event.target.value
+    localStorage.setItem('count',count)
+    setTimeout(()=>{
+      this.total=this.option.price*Number(localStorage.getItem('count'))
+      this.totalAmount?.patchValue(this.total)
+      this.totalAmountWithTax?.patchValue(this.typetax!=0?this.total*(15/100):this.total)
+      console.log(this.total);
+      
+    },1000)
+    
+  }
+
   ngOnDestroy(): void {
     this.purchase.OnePurchase=undefined
   }

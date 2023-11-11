@@ -12,7 +12,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { AddCategoryComponent } from './add-category/add-category.component';
 import { DialogModule } from 'primeng/dialog';
-
+import { DropdownModule } from 'primeng/dropdown';
 @NgModule({
 	imports: [
 		CommonModule,
@@ -24,7 +24,8 @@ import { DialogModule } from 'primeng/dialog';
 		ReactiveFormsModule,
 		InputTextModule,
 		InputNumberModule,
-		DialogModule
+		DialogModule,
+		DropdownModule
 	],
 	declarations: [FileDemoComponent, StorsDetailsComponent, AddStorsComponent, AddCategoryComponent],
 })

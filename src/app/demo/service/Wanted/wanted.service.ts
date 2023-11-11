@@ -9,6 +9,7 @@ import { Wanted } from '../../api/wanted';
 })
 export class WantedService {
   oneWanted:any
+  AllWanted:any
   constructor( private http : HttpClient) { }
   AddWanted(body:Wanted):Observable<any>{
     return this.http.post<any>(`${environment.apiUrl}api/Wanted/AddWanted`,body)

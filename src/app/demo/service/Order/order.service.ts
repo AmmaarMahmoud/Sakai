@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
+import { Sales } from '../../api/sales';
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +12,10 @@ export class OrderService {
 
   constructor( private http : HttpClient) { }
 
-  AddSales(body:any):Observable<any>{
+  AddSales(body:Sales):Observable<any>{
     return this.http.post<any>(`${environment.apiUrl}api/Order/AddOrder`,body)
   }
-  UpdateSales(body:any):Observable<any>{
+  UpdateSales(body:Sales):Observable<any>{
     return this.http.post<any>(`${environment.apiUrl}api/Order/UpdateOrder`,body)
   }
   GetAllSales():Observable<any>{

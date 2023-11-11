@@ -24,8 +24,8 @@ export class AddStorsComponent implements OnDestroy{
       Name:['',[Validators.required]],
       Price:['',[Validators.required]],
       Tax:['',[Validators.required]],
-      Type_tax:['',[Validators.required]],
-      Unit:['',[Validators.required]],
+      Type_tax:['اختر نوع الضريبة',[Validators.required]],
+      Unit:['اختر نوع الوحدة',[Validators.required]],
       Count:['',[Validators.required]],
       Category_ID:['اختر نوع الفئه',[Validators.required]]
     })
@@ -69,9 +69,9 @@ onSubmit(){
       0,
       this.Name?.value,
       this.Tax?.value,
-      this.Type_tax?.value,
+      Number(this.Type_tax?.value),
       this.Price?.value,
-      this.Unit?.value,
+      Number(this.Unit?.value),
       this.Count?.value,
       Number(this.Category_ID?.value)
       )
@@ -79,11 +79,22 @@ onSubmit(){
     console.log(prod);
   }
   else{
-    this.UpdateOneProduct()
+    const id = this.products.OneUpdateProduct.id
+    const prod = new Product(
+      Number(id),
+      this.Name?.value,
+      this.Tax?.value,
+      Number(this.Type_tax?.value),
+      this.Price?.value,
+      Number(this.Unit?.value),
+      this.Count?.value,
+      Number(this.Category_ID?.value)
+      )
+    this.UpdateOneProduct(prod)
   }
   }
-  UpdateOneProduct(){
-    this.products.UpdateProduct(this.MyForm.value).subscribe((data)=>{
+  UpdateOneProduct(prod:Product){
+    this.products.UpdateProduct(prod).subscribe((data)=>{
       console.log(data);
       this.route.navigate(['uikit/stores'])
     })

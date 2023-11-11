@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs';
 import { ClientService } from 'src/app/demo/service/Client/client.service';
 import { ProductService } from 'src/app/demo/service/Products/product.service';
+import { WantedService } from 'src/app/demo/service/Wanted/wanted.service';
 
 @Component({
   selector: 'app-bills',
@@ -13,6 +14,7 @@ export class BillsComponent implements OnInit {
   visible: boolean = false;
 
   constructor(
+    private Wanted:WantedService,
     private Client:ClientService,
     private product:ProductService
   ) {
@@ -30,6 +32,7 @@ export class BillsComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getAllClient()
+    this.getAllWanted()
     this.getAllProduct()
   }
 
@@ -39,6 +42,22 @@ export class BillsComponent implements OnInit {
   }
   hideDialog(){
     this.visible = false;
+  }
+  getAllWanted(){
+    this.Wanted.GetAllWanted().pipe(
+      map((values:any)=>{
+        return values.data.map((value:any)=>{
+          return {
+            id:value.id,
+            name:value.name
+          }
+        })
+      })
+    ).subscribe((data:any)=>{
+     this.Wanted.AllWanted=data
+     console.log(data);
+     
+    })
   }
   getAllClient(){
     this.Client.GetAllClient().pipe(
@@ -59,15 +78,12 @@ export class BillsComponent implements OnInit {
     getAllProduct(){
       this.product.GetAllProduct().pipe(
         map((values:any)=>{
-          return values.data.map((value:any)=>{
-            return {
-              id:value.id,
-              name:value.name
-            }
-          })
+          return values.data
         })
       ).subscribe((data:any)=>{
         this.product.AllProduct=data
+        console.log(data);
+        
       })
     }
 }

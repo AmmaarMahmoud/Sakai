@@ -5,7 +5,7 @@
         <form class="w-full grid" [formGroup]="MyForm" (ngSubmit)="onSubmit()">
             <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
                 <label htmlFor="username">اسم المنتج</label>
-                <input pInputText id="username" aria-describedby="username-help" formControlName="Name"/>
+                <input pInputText id="username" aria-describedby="username-help" formControlName="Name" placeholder="اسم المنتج"/>
                 <div *ngIf="Name?.invalid && Name?.touched" class="alert alert-danger">
                     <small *ngIf="Name?.hasError('required')" class="text-danger"> اسم المنتج مطلوب</small>
                 </div>
@@ -32,18 +32,40 @@
                     <small *ngIf="Tax?.hasError('required')" >الضريبة مطلوبة</small>
                 </div>
             </div>
-            <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
+            <!-- <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
                 <label htmlFor="username">نوع الضريبة</label>
                 <p-inputNumber inputId="integeronly" formControlName="Type_tax"> </p-inputNumber>
                 <div *ngIf="Type_tax?.invalid && Type_tax?.touched ">
                     <small *ngIf="Type_tax?.hasError('required')" >ضريبة النوع مطلوبة</small>
                 </div>
-            </div>
+            </div> -->
             <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
+                <label htmlFor="Type_tax">اختر نوع الضريبة </label>
+                <select class="md:w-20rem w-full" containerStyleClass="w-full" aria-label="Default select example" formControlName="Type_tax">
+                    <option [selected]="true" [disabled]="true">اختر نوع الضريبة</option>
+                    <option [value]="0"> صفريه</option>
+                    <option [value]="1"> 15% </option>
+                </select>
+                <div *ngIf="Type_tax?.invalid && Type_tax?.touched ">
+                    <small *ngIf="Type_tax?.hasError('required')" >اختر نوع الضريبة</small>
+                </div>
+            </div>
+            <!-- <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
                 <label htmlFor="username">وحدة</label>
                 <p-inputNumber inputId="integeronly" formControlName="Unit"> </p-inputNumber>
                 <div *ngIf="Unit?.invalid && Unit?.touched">
                     <small *ngIf="Unit?.hasError('required')" >الوحدة مطلوبة</small>
+                </div>
+            </div> -->
+            <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
+                <label htmlFor="Unit">اختر نوع الوحدة </label>
+                <select class="md:w-20rem w-full" containerStyleClass="w-full" aria-label="Default select example" formControlName="Unit">
+                    <option [selected]="true" [disabled]="true">اختر نوع الوحدة</option>
+                    <option [value]="0"> قطع</option>
+                    <option [value]="1">كرتونه </option>
+                </select>
+                <div *ngIf="Unit?.invalid && Unit?.touched ">
+                    <small *ngIf="Unit?.hasError('required')" >اختر نوع الوحدة</small>
                 </div>
             </div>
             <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
