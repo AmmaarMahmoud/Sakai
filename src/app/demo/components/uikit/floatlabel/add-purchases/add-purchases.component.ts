@@ -132,11 +132,11 @@ AddProducts(){
     product_ID:['اختر اسم المنتج',[Validators.required]],
     purchase_ID:['0',[Validators.required]],
     count:['',[Validators.required]],
-    price:[{value:'', disabled: this.isDisabled},[Validators.required]],
+    price:['',[Validators.required]],
   })
   this.product_Purchases.push(Group)
-  console.log(this.product_Purchases);
-  
+  localStorage.removeItem('count')
+  localStorage.removeItem('price')
 }
 
   checkPurchase(){
@@ -169,33 +169,58 @@ AddProducts(){
     this.AllProduct.forEach((value:any)=>{
       if(id===value.id){
         this.typetax=value.type_tax
-        this.option=value
-        console.log(this.typetax);
-        console.log(value);
-        console.log(this.option.price);
-        const length=this.product_Purchases.length-1
-        this.product_Purchases.controls[length].get('price')?.patchValue(this.option.price);
-        
       }
     })
   }
-  proccesstotalAmount(event:any){
 
-    localStorage.removeItem('count')
-    const count=event.target.value
-    localStorage.setItem('count',count)
-    setTimeout(()=>{
-      this.total=this.option.price*Number(localStorage.getItem('count'))
-      this.totalAmount?.patchValue(this.total)
-      this.totalAmountWithTax?.patchValue(this.typetax!=0?this.total*(15/100):this.total)
-      console.log(this.total);
-      
-    },1000)
-    
+
+  procces:any={
+    totalAmount:[],
+    totalAmountWithTax:[]
   }
+  timeOut:any
+  proccesstotalAmount(event:any,title:string){
+    clearTimeout(this.timeOut)
+    this.total=0
+    localStorage.removeItem('total')
 
+    if(title==='count'){
+      localStorage.removeItem('count')
+      const count=event.target.value
+      localStorage.setItem('count',count)
+    }
+    else{
+      localStorage.removeItem('price')
+      const price=event.target.value
+      localStorage.setItem('price',price)
+    }
+
+     if(Number(localStorage.getItem('price')) && Number(localStorage.getItem('count'))){
+      this.total=Number(localStorage.getItem('price')) * Number(localStorage.getItem('count'))
+      localStorage.setItem('total',this.total.toString())
+      this.timeOut=setTimeout(() => {
+        const total = Number(localStorage.getItem('total'))
+        this.procces.totalAmount.push(total)
+        this.procces.totalAmountWithTax.push(this.typetax!=0?total * (15/100) : total)
+        let totalAmount:number=0
+        let totalAmountWithTax:number=0
+        this.procces.totalAmount.forEach((value:any) => {
+          totalAmount+=value
+        });
+        this.procces.totalAmountWithTax.forEach((value:any) => {
+          totalAmountWithTax+=value
+        });
+        this.totalAmount?.patchValue(totalAmount)
+        this.totalAmountWithTax?.patchValue(totalAmountWithTax)
+        console.log(this.procces);
+       }, 1000);
+     }
+  }
   ngOnDestroy(): void {
     this.purchase.OnePurchase=undefined
+    this.total=0
+    localStorage.removeItem('count')
+    localStorage.removeItem('price')
   }
 }
 
