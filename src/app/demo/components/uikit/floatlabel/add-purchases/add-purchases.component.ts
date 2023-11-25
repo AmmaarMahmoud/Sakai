@@ -18,7 +18,6 @@ export class AddPurchasesComponent implements OnInit,OnDestroy {
   isDisabled:boolean=true
   total:number=0
   typetax?:number
-  option:any
   constructor(
     private builder :FormBuilder, 
     private Client:ClientService,
@@ -137,6 +136,10 @@ AddProducts(){
   this.product_Purchases.push(Group)
   localStorage.removeItem('count')
   localStorage.removeItem('price')
+}
+
+EnterKeydown(event:any){
+  event.preventDefault()
 }
 
   checkPurchase(){

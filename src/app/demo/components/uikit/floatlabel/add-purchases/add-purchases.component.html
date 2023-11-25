@@ -62,7 +62,7 @@
           
             <p-fieldset legend="اضافة المنتجات" class="flex flex-column gap-2 col-12">
                 <div class="flex flex-column gap-2 col-12">
-                    <p-button label="اضافة منتجات" type="button" [disabled]="product_Purchases.invalid" (onClick)="AddProducts()"></p-button>
+                    <p-button label="اضافة منتجات" type="button" [disabled]="product_Purchases.invalid" (onClick)="AddProducts()"  (keydown.enter)="EnterKeydown($event)"></p-button>
                 </div>
                 <div  formArrayName="product_Purchases">
                     <ng-container *ngFor="let control of product_Purchases?.controls ; let i = index">

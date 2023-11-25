@@ -71,7 +71,6 @@ onSubmit(){
     this.Order.AddSales(order).subscribe((data:any)=>{
       this.route.navigate(['uikit/sales'])
       console.log(this.MyForm.value);
-      
     })
   }
   else{
@@ -88,10 +87,11 @@ AddProducts(){
     this.builder.group({
       id:['اختر اسم المنتج',[Validators.required]],
       order_ID:['0',[Validators.required]],
-      count:['',[Validators.required]],
+      count:['0',[Validators.required]],
       price:[{value:'', disabled:this.isDisabled},[Validators.required]],
     })
   )
+  this.option=undefined
 }
 
 EnterKeydown(event:any){
@@ -142,34 +142,71 @@ procces:any={
 timeOut:any
 proccesstotalAmount(event:any){
   clearTimeout(this.timeOut)
-  this.total=0
+
   localStorage.removeItem('count')
-  localStorage.removeItem('total')
-  const count=event.target.value
-  localStorage.setItem('count',count)
-    this.total=this.option.price * Number(localStorage.getItem('count'))
-    localStorage.setItem('total',this.total.toString())
-   this.timeOut=setTimeout(() => {
-    const total = Number(localStorage.getItem('total'))
-    this.procces.totalAmount.push(total)
-    this.procces.totalAmountWithTax.push(this.typetax!=0?total * (15/100) : total)
+  localStorage.setItem('count',event.target.value)
+  this.timeOut=setTimeout(() => {
+
+  if( Number(localStorage.getItem('count'))){
     let totalAmount:number=0
     let totalAmountWithTax:number=0
-    this.procces.totalAmount.forEach((value:any) => {
-      totalAmount+=value
-    });
-    this.procces.totalAmountWithTax.forEach((value:any) => {
-      totalAmountWithTax+=value
-    });
+    
+    this.product_Orders.controls.forEach((values:any)=>{
+      console.log(this.MyForm.value);
+      if( Number(localStorage.getItem('count')) === values.get('count').value){
+        console.log('ammar');
+        let index=this.product_Orders.controls.indexOf(values)
+        this.procces.totalAmount[index]=values.get('price')?.value *  Number(localStorage.getItem('count'))
+        this.procces.totalAmountWithTax[index]=totalAmount*(15/100)
+      }
+    })
+    this.procces.totalAmount.forEach((data:number)=>{
+      totalAmount+=data
+    })
+    this.procces.totalAmountWithTax.forEach((data:number)=>{
+      totalAmountWithTax+=data
+    })
     this.totalAmount?.patchValue(totalAmount)
-    this.totalAmountWithTax?.patchValue(totalAmountWithTax)
-    console.log(this.procces);
-   }, 1000);
+    this.totalAmountWithTax?.patchValue(this.typetax!=0?totalAmountWithTax:totalAmount)
+  }
+  }, 2000);
+
+  // clearTimeout(this.timeOut)
+  // this.total=0
+  // localStorage.removeItem('count')
+  // localStorage.removeItem('total')
+  // const count=event.target.value
+  // localStorage.setItem('count',count)
+  //   this.total=this.option.price * Number(localStorage.getItem('count'))
+  //   localStorage.setItem('total',this.total.toString())
+  //  this.timeOut=setTimeout(() => {
+  //   console.log(Number(localStorage.getItem('count')));
+    
+  //  if(Number(localStorage.getItem('count')) && this.option.price){
+  //   const total = Number(localStorage.getItem('total'))
+  //   this.procces.totalAmount.push(total)
+  //   this.procces.totalAmountWithTax.push(this.typetax!=0?total * (15/100) : total)
+  //   let totalAmount:number=0
+  //   let totalAmountWithTax:number=0
+  //   this.procces.totalAmount.forEach((value:any) => {
+  //     totalAmount+=value
+  //   });
+  //   this.procces.totalAmountWithTax.forEach((value:any) => {
+  //     totalAmountWithTax+=value
+  //   });
+  //   this.totalAmount?.patchValue(totalAmount)
+  //   this.totalAmountWithTax?.patchValue(totalAmountWithTax)
+  //   console.log(this.procces);
+  //   console.log(this.product_Orders.controls[0].get('price')?.value);
+    
+  //  }
+  //  }, 2000);
 }
 ngOnDestroy(): void {
   this.Order.OneOrder=undefined
   this.total=0
   this.procces.totalAmount=[]
   this.procces.totalAmountWithTax=[]
+  this.option=undefined
 }
 }

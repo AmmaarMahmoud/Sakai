@@ -66,7 +66,7 @@
 
             <p-fieldset legend="اضافة المنتجات" class="flex flex-column gap-2 col-12">
                 <div class="flex flex-column gap-2 col-12">
-                    <p-button label="اضافة منتجات" type="ngSubmit" [disabled]="product_Orders.invalid" (onClick)="AddProducts()" (keydown.enter)="EnterKeydown($event)"></p-button>
+                    <p-button label="اضافة منتجات" type="button" [disabled]="product_Orders.invalid" (onClick)="AddProducts()" (keydown.enter)="EnterKeydown($event)"></p-button>
                 </div>
                 <div  formArrayName="product_Orders">
                     <ng-container *ngFor="let control of product_Orders?.controls ; let i = index">
@@ -85,7 +85,7 @@
                             </div>
                             <div class="flex flex-column gap-2 xl:col-4 lg:col-4 md:col-6 sm:col-12 col-12">
                                 <label htmlFor="count"> العدد</label>
-                                <p-inputNumber inputId="count" formControlName="count" (keyup)="proccesstotalAmount($event)"> </p-inputNumber>
+                                <p-inputNumber inputId="count"(keyup)="proccesstotalAmount($event)" formControlName="count" > </p-inputNumber>
                                 <div *ngIf="control.get('count')?.invalid && control.get('count')?.touched ">
                                     <small *ngIf="control.get('count')?.hasError('required')" > العدد مطلوب</small>
                                 </div>

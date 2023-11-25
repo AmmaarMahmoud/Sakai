@@ -1,16 +1,68 @@
-<div class="grid card mt-0">
-    <!-- <div class=" md-6 lg-6 xl-6">
-        <img src="assets/demo/images/customer/customer.jpeg" width="200rem" alt="Customer" class="supplier-image">
-    </div> -->
-    <div class=" md-6 lg-6 xl-6">
-        <div class="supplier-card">
-            
-            <div class="supplier-details">
-            <p><strong>الاسم:</strong>  10 </p>
-            <p><strong>الرقم التعريفي:</strong> Ammar</p>
-            <p><strong>الجنس:</strong> male</p>
-            </div>
-      </div>
+<div class="card">
+    <div class="text-center mb-4 flex justify-content-center align-items-center">
+        <div class="mx-2">
+            <h5 >مؤسسه فرسان العرب</h5>
+            <h5 >للمقاولات العامه</h5>
+        </div>
+        <img src="assets/demo/images/customer/customer.jpeg" width="70px" height="70px" alt="Customer" class="supplier-image rounded-circle">
     </div>
+    <div class="grid flex justify-content-between mb-3">
+        <div class="sm-12 md-6 lg-6 xl-6">
+            <div class="supplier-details">
+                <p><strong>رقم الفاتوره: </strong>  10 </p>
+                <p><strong> تبوك</strong> - السعوديه</p>
+            </div>
+        </div>
+        <div class="sm-12 md-6 lg-6 xl-6">
+            <div class="supplier-details">
+                <p><strong>رقم الموبايل: </strong> 01149840784 </p>
+                <p><strong> تبوك </strong>/ تبوك 1144</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card w-full">
+		<p-table [value]="AllClient" [tableStyle]="{ 'min-width': '50rem' }">
+			<ng-template pTemplate="header">
+				<tr>
+					<th>رقم الفاتوره</th>
+					<th> المنتجات</th>
+					<th></th>
+                    <th>العدد</th>
+                    <th></th>
+					<th> الاسعار</th>
+					<th>المبلغ الاجمالى</th>
+					<th>الضريبه</th>
+					<th>المبلغ الاجمالى مع الضريبه</th>
+				</tr>
+			</ng-template>
+			<ng-template pTemplate="body" let-product>
+				<tr>
+					<td>{{ product.name }}</td>
+					<td class="flex flex-column justify-content-center">
+                        <ng-container *ngFor="let items of product.products">
+                            <td>{{items.prod}}</td>
+                        </ng-container>
+                    </td>
+					<td></td>
+                    <td class="flex flex-column justify-content-center">
+                        <ng-container *ngFor="let item of product.products">
+                            <td>{{item.count}}</td>
+                        </ng-container>
+                    </td>
+                    <td></td>
+                    <td class="flex flex-column justify-content-center">
+                        <ng-container *ngFor="let item of product.products">
+                            <td>{{item.price}}</td>
+                        </ng-container>
+                    </td>
+					<td>{{ product.total }}</td>
+					<td>{{ product.tax }}</td>
+					<td>{{ product.totalwithTax }}</td>
+				</tr>
+				
+			</ng-template>
+		</p-table>
+	</div>
   </div>
   
